@@ -5,7 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#100b1c">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./manifest.json">
 <title>MIAL | Your Life, Your Way</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -22,7 +25,9 @@ justify-content:space-between;align-items:center}
 .small{font-size:11px;color:var(--muted);margin-top:5px}
 .avatar{width:42px;height:42px;border-radius:50%;
 background:linear-gradient(135deg,#a78bfa,#e4a5dc);
-display:grid;place-items:center;color:#170e25;font-weight:bold}
+display:grid;place-items:center;color:#170e25;font-weight:bold;
+overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 main{padding:10px 18px;max-width:650px;margin:auto}
 .welcome{padding:20px 0}
 h1{font-size:26px;margin:8px 0}
@@ -72,11 +77,17 @@ nav button.selected{color:var(--purple)}
 footer{text-align:center;color:var(--muted);font-size:10px;padding:25px}
 </style>
 </head>
+
 <body>
 <header>
- <div><div class="logo">MI<span>AL</span></div>
- <div class="small">YOUR LIFE, YOUR WAY</div></div>
- <div class="avatar">M</div>
+ <div>
+  <div class="logo">MI<span>AL</span></div>
+  <div class="small">YOUR LIFE, YOUR WAY</div>
+ </div>
+
+ <div class="avatar">
+  <img src="./icon-192.png" alt="Mili, mascota de MIAL">
+ </div>
 </header>
 
 <main>
@@ -94,39 +105,55 @@ footer{text-align:center;color:var(--muted);font-size:10px;padding:25px}
   cumple tus metas y descubre todo tu potencial.</p>
  </div>
 
- <div class="section-title"><h3>YOUR LIFE, YOUR WAY</h3>
- <span>EXPLORAR</span></div>
+ <div class="section-title">
+  <h3>YOUR LIFE, YOUR WAY</h3>
+  <span>EXPLORAR</span>
+ </div>
 
  <div class="grid">
   <div class="card" onclick="openPage('finanzas')">
-   <div class="emoji">💰</div><h4>Finanzas</h4>
+   <div class="emoji">💰</div>
+   <h4>Finanzas</h4>
    <p>Dinero, gastos y ahorros.</p>
   </div>
+
   <div class="card" onclick="openPage('metas')">
-   <div class="emoji">🎯</div><h4>Metas</h4>
+   <div class="emoji">🎯</div>
+   <h4>Metas</h4>
    <p>Tus sueños y objetivos.</p>
   </div>
+
   <div class="card" onclick="openPage('vida')">
-   <div class="emoji">🪷</div><h4>My Life</h4>
+   <div class="emoji">🪷</div>
+   <h4>My Life</h4>
    <p>Tu vida bajo control.</p>
   </div>
+
   <div class="card" onclick="openPage('tests')">
-   <div class="emoji">🧠</div><h4>Know Yourself</h4>
+   <div class="emoji">🧠</div>
+   <h4>Know Yourself</h4>
    <p>Conócete profundamente.</p>
   </div>
+
   <div class="card" onclick="openPage('plantillas')">
-   <div class="emoji">📚</div><h4>Templates</h4>
+   <div class="emoji">📚</div>
+   <h4>Templates</h4>
    <p>Herramientas para organizarte.</p>
   </div>
+
   <div class="card" onclick="openPage('compartido')">
-   <div class="emoji">🤝</div><h4>Shared with me</h4>
+   <div class="emoji">🤝</div>
+   <h4>Shared with me</h4>
    <p>Espacios compartidos.</p>
   </div>
+
   <div class="card wide" onclick="openPage('digital')">
-   <div class="emoji">🌙</div><h4>My digital world</h4>
+   <div class="emoji">🌙</div>
+   <h4>My digital world</h4>
    <p>Tu espacio, tus proyectos y tus ideas.</p>
   </div>
  </div>
+
  <div class="module">
   <h3>✨ Tu progreso</h3>
   <p>Todo gran cambio comienza con un pequeño paso.</p>
@@ -138,75 +165,102 @@ footer{text-align:center;color:var(--muted);font-size:10px;padding:25px}
  <button class="back" onclick="openPage('home')">← Volver</button>
  <div class="eyebrow">TU TRANQUILIDAD ECONÓMICA</div>
  <h1>💰 Finanzas</h1>
- <div class="module"><h3>Mi registro financiero</h3>
- <p>Registra tus ingresos y gastos.</p>
- <input id="concepto" placeholder="Concepto">
- <input id="cantidad" type="number" placeholder="Cantidad ($)">
- <button class="action" onclick="addMoney()">Guardar movimiento</button>
- <h3 style="margin-top:20px">Movimientos</h3>
- <div id="movimientos"></div>
+
+ <div class="module">
+  <h3>Mi registro financiero</h3>
+  <p>Registra tus ingresos y gastos.</p>
+  <input id="concepto" placeholder="Concepto">
+  <input id="cantidad" type="number" placeholder="Cantidad ($)">
+  <button class="action" onclick="addMoney()">Guardar movimiento</button>
+  <h3 style="margin-top:20px">Movimientos</h3>
+  <div id="movimientos"></div>
  </div>
 </section>
 
 <section id="metas" class="page">
  <button class="back" onclick="openPage('home')">← Volver</button>
  <h1>🎯 Mis metas</h1>
- <div class="module"><p>Escribe aquello que quieres conseguir.</p>
- <input id="nuevaMeta" placeholder="Mi próxima meta...">
- <button class="action" onclick="addItem('nuevaMeta','listaMetas')">Agregar meta</button>
- <div id="listaMetas"></div></div>
+ <div class="module">
+  <p>Escribe aquello que quieres conseguir.</p>
+  <input id="nuevaMeta" placeholder="Mi próxima meta...">
+  <button class="action" onclick="addItem('nuevaMeta','listaMetas')">Agregar meta</button>
+  <div id="listaMetas"></div>
+ </div>
 </section>
 
 <section id="vida" class="page">
  <button class="back" onclick="openPage('home')">← Volver</button>
  <h1>🪷 My Life</h1>
- <div class="module"><h3>Organiza tu existencia</h3>
- <p>Hábitos, rutinas, autocuidado, hogar, estudios,
- trabajo, relaciones y bienestar.</p></div>
- <div class="module"><h3>Mi día</h3>
- <input placeholder="¿Qué quiero hacer hoy?">
- <p>Pronto podrás gestionar tus rutinas y actividades.</p></div>
+ <div class="module">
+  <h3>Organiza tu existencia</h3>
+  <p>Hábitos, rutinas, autocuidado, hogar, estudios,
+  trabajo, relaciones y bienestar.</p>
+ </div>
+ <div class="module">
+  <h3>Mi día</h3>
+  <input placeholder="¿Qué quiero hacer hoy?">
+  <p>Pronto podrás gestionar tus rutinas y actividades.</p>
+ </div>
 </section>
 
 <section id="tests" class="page">
  <button class="back" onclick="openPage('home')">← Volver</button>
  <h1>🧠 Know Yourself</h1>
- <div class="module"><h3>Descubre quién eres</h3>
- <p>Evaluaciones de personalidad, valores, fortalezas,
- emociones, intereses y visión de futuro.</p>
- <p>Un espacio para conocerte, reflexionar y crecer.</p></div>
+ <div class="module">
+  <h3>Descubre quién eres</h3>
+  <p>Evaluaciones de personalidad, valores, fortalezas,
+  emociones, intereses y visión de futuro.</p>
+  <p>Un espacio para conocerte, reflexionar y crecer.</p>
+ </div>
 </section>
 
 <section id="plantillas" class="page">
  <button class="back" onclick="openPage('home')">← Volver</button>
  <h1>📚 Templates</h1>
- <div class="module"><h3>Tu biblioteca de herramientas</h3>
- <p>Planificadores, presupuestos, calendarios,
- listas y organizadores.</p></div>
+ <div class="module">
+  <h3>Tu biblioteca de herramientas</h3>
+  <p>Planificadores, presupuestos, calendarios,
+  listas y organizadores.</p>
+ </div>
 </section>
 
 <section id="compartido" class="page">
  <button class="back" onclick="openPage('home')">← Volver</button>
  <h1>🤝 Shared with me</h1>
- <div class="module"><h3>Comparte tus espacios</h3>
- <p>Organiza proyectos y actividades con otras personas.</p></div>
+ <div class="module">
+  <h3>Comparte tus espacios</h3>
+  <p>Organiza proyectos y actividades con otras personas.</p>
+ </div>
 </section>
 
 <section id="digital" class="page">
  <button class="back" onclick="openPage('home')">← Volver</button>
  <h1>🌙 My digital world</h1>
- <div class="module"><h3>Tu mundo digital</h3>
- <p>Ideas, proyectos, archivos, recursos y creatividad.</p></div>
+ <div class="module">
+  <h3>Tu mundo digital</h3>
+  <p>Ideas, proyectos, archivos, recursos y creatividad.</p>
+ </div>
 </section>
+
 <footer>MIAL © 2026 · YOUR LIFE, YOUR WAY</footer>
 </main>
 
 <nav>
- <button class="selected" onclick="openPage('home',this)"><b>⌂</b>Inicio</button>
- <button onclick="openPage('vida',this)"><b>✧</b>Mi vida</button>
- <button onclick="openPage('metas',this)"><b>◎</b>Metas</button>
- <button onclick="openPage('finanzas',this)"><b>▤</b>Finanzas</button>
- <button onclick="openPage('tests',this)"><b>◉</b>Perfil</button>
+ <button class="selected" onclick="openPage('home',this)">
+  <b>⌂</b>Inicio
+ </button>
+ <button onclick="openPage('vida',this)">
+  <b>✧</b>Mi vida
+ </button>
+ <button onclick="openPage('metas',this)">
+  <b>◎</b>Metas
+ </button>
+ <button onclick="openPage('finanzas',this)">
+  <b>▤</b>Finanzas
+ </button>
+ <button onclick="openPage('tests',this)">
+  <b>◉</b>Perfil
+ </button>
 </nav>
 
 <script>
@@ -217,6 +271,7 @@ function openPage(id,btn){
  if(btn)btn.classList.add('selected');
  window.scrollTo(0,0);
 }
+
 function addItem(inputId,listId){
  const input=document.getElementById(inputId);
  if(!input.value.trim())return;
@@ -226,6 +281,7 @@ function addItem(inputId,listId){
  document.getElementById(listId).appendChild(item);
  input.value='';
 }
+
 function addMoney(){
  const concept=document.getElementById('concepto');
  const amount=document.getElementById('cantidad');
@@ -233,9 +289,10 @@ function addMoney(){
  const item=document.createElement('p');
  item.textContent=concept.value+' — $'+Number(amount.value).toFixed(2);
  document.getElementById('movimientos').appendChild(item);
- concept.value='';amount.value='';
+ concept.value='';
+ amount.value='';
 }
 </script>
 </body>
   </html>
-                               
+   
